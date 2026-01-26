@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>學思軒 國中英文2000單字 練習神器</title>
+<style>
+/* --- 核心變數 --- */
+:root { 
+    --primary: #3949ab; 
+    --primary-light: #e8eaf6; 
+    --accent: #ff4081; 
+    --success: #00c853; 
+    --warning: #ff9800; 
+    --danger: #f44336; 
+    --bg: #f5f7fa; 
+    --card-bg: #ffffff; 
+    --text: #263238; 
+    --title-color: #d84315; 
+}
+
+body { 
+    font-family: "Microsoft JhengHei", "Heiti TC", sans-serif; 
+    background-color: var(--bg); 
+    margin: 0; 
+    padding: 10px 20px 5px 20px; /* 調整下方 padding */
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    min-height: 100vh; 
+    color: var(--text); 
+}
+
+/* --- 首頁與導航 --- */
+#home-screen { width: 100%; max-width: 1000px; display: flex; flex-direction: column; align-items: center; animation: fadeIn 0.5s ease; }
+
+.main-title { 
+    font-size: 32px; 
+    font-weight: 900; 
+    color: var(--title-color); 
+    text-align: center; 
+    margin-top: 0; 
+    margin-bottom: 10px; 
+    text-shadow: 2px 2px 0px rgba(0,0,0,0.05); 
+}
+
+.sub-title { font-size: 20px; color: var(--success); font-weight: bold; margin-bottom: 25px; text-align: center; } /* 稍微縮小 subtitle 間距 */
+.brand-highlight { color: var(--accent); }
+
+/* 單元網格 */
+.units-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); 
+    gap: 15px; 
+    width: 100%; 
+    margin-bottom: 20px; /* 大幅減少底部留白 (原40px) */
+}
+
+.unit-card { 
+    background: white; border-radius: 15px; padding: 20px 15px; 
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; 
+    transition: transform 0.1s, box-shadow 0.1s, background-color 0.2s; position: relative; overflow: hidden;
+    border-bottom: 4px solid #eceff1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-decoration: none; 
+    color: inherit;
+    border: 2px solid transparent; 
+    border-bottom: 4px solid #eceff1;
+}
+
+.unit-card:hover { 
+    transform: translateY(-3px); 
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1); 
+    border-color: var(--primary); 
+    background-color: #e8eaf6; 
+}
+
+.unit-card:active { 
+    transform: translateY(1px); 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background-color: #c5cae9; 
+    border-color: var(--accent); 
+    border-bottom: 2px solid var(--accent); 
+}
+
+.unit-card:visited { color: inherit; }
+.unit-card.active { border-color: var(--success); background-color: #f1f8e9; }
+.unit-num { font-size: 18px; font-weight: bold; color: #546e7a; margin-bottom: 5px; }
+.unit-range { font-size: 12px; color: #90a4ae; }
+.unit-desc { font-size: 13px; font-weight: bold; color: var(--primary); margin-top: 8px; }
+.unit-badge { position: absolute; top: 5px; right: 5px; font-size: 16px; }
+
+/* 頁腳 */
+.footer-credit { 
+    margin-top: 10px;   /* 減少與上方網格的距離 (原40px) */
+    margin-bottom: 5px; /* 減少與頁面底部的距離 (原20px) */
+    font-size: 14px; 
+    color: #90a4ae; 
+    font-weight: 500; 
+    text-align: center; 
+    letter-spacing: 1px; 
+}
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+
+<!-- 首頁 (單元選擇) -->
+<div id="home-screen">
+    <div class="main-title">國中英文單字2000練習神器</div>
+    <div class="sub-title">歡迎來到 <span class="brand-highlight">學思軒特訓中心</span></div>
+    
+    <div class="units-grid" id="units-container">
+        <!-- JS 將自動生成 20 個單元按鈕 -->
+    </div>
+    <div class="footer-credit">𖤐本網頁由Gemini生成，龍門國中黃于珊老師編輯𖤐</div>
+</div>
+
+<script>
+// ==========================================
+// 外部連結設定
+// ==========================================
+const unitLinks = {
+    1: "https://nguoyama.github.io/114NG/?id=eng-01",
+    2: "https://nguoyama.github.io/114NG/?id=eng-02",
+    3: "https://nguoyama.github.io/114NG/?id=eng-03",
+    4: "https://nguoyama.github.io/114NG/?id=eng-04",
+    5: "https://nguoyama.github.io/114NG/?id=eng-05",
+    6: "https://nguoyama.github.io/114NG/?id=eng-06",
+    7: "https://nguoyama.github.io/114NG/?id=eng-07",
+    8: "https://nguoyama.github.io/114NG/?id=eng-08",
+    9: "https://nguoyama.github.io/114NG/?id=eng-09",
+    10: "https://nguoyama.github.io/114NG/?id=eng-10",
+    11: "https://nguoyama.github.io/114NG/?id=eng-11",
+    12: "https://nguoyama.github.io/114NG/?id=eng-12",
+    13: "https://nguoyama.github.io/114NG/?id=eng-13",
+    14: "https://nguoyama.github.io/114NG/?id=eng-14",
+    15: "https://nguoyama.github.io/114NG/?id=eng-15",
+    16: "https://nguoyama.github.io/114NG/?id=eng-16",
+    17: "https://nguoyama.github.io/114NG/?id=eng-17",
+    18: "https://nguoyama.github.io/114NG/?id=eng-18",
+    19: "https://nguoyama.github.io/114NG/?id=eng-19",
+    20: "https://nguoyama.github.io/114NG/?id=eng-20"
+};
+
+// 渲染首頁單元按鈕
+function renderHome() {
+    const container = document.getElementById('units-container');
+    container.innerHTML = '';
+    
+    // 生成 20 個單元按鈕
+    for (let i = 1; i <= 20; i++) {
+        const link = document.createElement('a');
+        link.className = 'unit-card';
+        link.href = unitLinks[i] || "#"; 
+        link.target = "_blank"; 
+        
+        let badge = "";
+        
+        link.innerHTML = `
+            ${badge}
+            <div class="unit-num">Unit ${i}</div>
+            <div class="unit-range">單字 ${1 + (i-1)*100} - ${i*100}</div>
+            <div class="unit-desc">點擊前往練習</div>
+        `;
+        
+        container.appendChild(link);
+    }
+}
+
+// 啟動程式
+document.addEventListener('DOMContentLoaded', renderHome);
+
+</script>
+</body>
+</html>
