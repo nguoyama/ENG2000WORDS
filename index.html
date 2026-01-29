@@ -23,7 +23,7 @@ body {
     font-family: "Microsoft JhengHei", "Heiti TC", sans-serif; 
     background-color: var(--bg); 
     margin: 0; 
-    padding: 10px 20px 5px 20px; /* 調整下方 padding */
+    padding: 10px 20px 5px 20px;
     display: flex; 
     flex-direction: column; 
     align-items: center; 
@@ -40,11 +40,17 @@ body {
     color: var(--title-color); 
     text-align: center; 
     margin-top: 0; 
-    margin-bottom: 10px; 
+    margin-bottom: 25px; /* 增加底部間距，與下方網格區隔 */
     text-shadow: 2px 2px 0px rgba(0,0,0,0.05); 
 }
 
-.sub-title { font-size: 20px; color: var(--success); font-weight: bold; margin-bottom: 25px; text-align: center; } /* 稍微縮小 subtitle 間距 */
+.sub-title { 
+    font-size: 20px; 
+    color: var(--success); 
+    font-weight: bold; 
+    margin-bottom: 5px; /* 減少底部間距，讓它更靠近主標題 */
+    text-align: center; 
+} 
 .brand-highlight { color: var(--accent); }
 
 /* 單元網格 */
@@ -53,11 +59,11 @@ body {
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); 
     gap: 15px; 
     width: 100%; 
-    margin-bottom: 20px; /* 大幅減少底部留白 (原40px) */
+    margin-bottom: 20px;
 }
 
 .unit-card { 
-    background: white; border-radius: 15px; padding: 20px 15px; 
+    background: white; border-radius: 15px; padding: 12px 10px; 
     box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; 
     transition: transform 0.1s, box-shadow 0.1s, background-color 0.2s; position: relative; overflow: hidden;
     border-bottom: 4px solid #eceff1; display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -65,6 +71,7 @@ body {
     color: inherit;
     border: 2px solid transparent; 
     border-bottom: 4px solid #eceff1;
+    min-height: 60px; /* 確保沒有文字時也有一定高度 */
 }
 
 .unit-card:hover { 
@@ -85,14 +92,14 @@ body {
 .unit-card:visited { color: inherit; }
 .unit-card.active { border-color: var(--success); background-color: #f1f8e9; }
 .unit-num { font-size: 18px; font-weight: bold; color: #546e7a; margin-bottom: 5px; }
-.unit-range { font-size: 12px; color: #90a4ae; }
-.unit-desc { font-size: 13px; font-weight: bold; color: var(--primary); margin-top: 8px; }
+.unit-range { font-size: 13px; color: #90a4ae; }
+.unit-desc { display: none; } /* 隱藏描述類別 */
 .unit-badge { position: absolute; top: 5px; right: 5px; font-size: 16px; }
 
 /* 頁腳 */
 .footer-credit { 
-    margin-top: 10px;   /* 減少與上方網格的距離 (原40px) */
-    margin-bottom: 5px; /* 減少與頁面底部的距離 (原20px) */
+    margin-top: 10px;   
+    margin-bottom: 5px; 
     font-size: 14px; 
     color: #90a4ae; 
     font-weight: 500; 
@@ -107,8 +114,9 @@ body {
 
 <!-- 首頁 (單元選擇) -->
 <div id="home-screen">
-    <div class="main-title">國中英文單字2000練習神器</div>
+    <!-- 交換順序：副標題在上，主標題在下 -->
     <div class="sub-title">歡迎來到 <span class="brand-highlight">學思軒特訓中心</span></div>
+    <div class="main-title">國中英文單字2000練習神器</div>
     
     <div class="units-grid" id="units-container">
         <!-- JS 將自動生成 20 個單元按鈕 -->
@@ -157,11 +165,11 @@ function renderHome() {
         
         let badge = "";
         
+        // 已移除 unit-desc 區塊
         link.innerHTML = `
             ${badge}
             <div class="unit-num">Unit ${i}</div>
             <div class="unit-range">單字 ${1 + (i-1)*100} - ${i*100}</div>
-            <div class="unit-desc">點擊前往練習</div>
         `;
         
         container.appendChild(link);
